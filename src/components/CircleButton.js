@@ -1,16 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-export default CircleButton = ({ children, style }) => {
+export default CircleButton = ({ name, style }) => {
   return (
     <View style={[styles.circleButton, style]}>
-      <Text style={styles.circleButtonLabel}>{children}</Text>
+      <Feather name={name} size={32} color="white"></Feather>
     </View>
   );
 };
 
 CircleButton.defaultProps = {
   style: null,
+  name: null,
 };
 const styles = StyleSheet.create({
   circleButton: {
