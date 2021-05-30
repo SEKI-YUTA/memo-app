@@ -1,14 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export default CircleButton = ({ children }) => {
+export default CircleButton = ({ children, style }) => {
   return (
-    <View style={styles.circleButton}>
+    <View style={[styles.circleButton, style]}>
       <Text style={styles.circleButtonLabel}>{children}</Text>
     </View>
   );
 };
 
+CircleButton.defaultProps = {
+  style: null,
+};
 const styles = StyleSheet.create({
   circleButton: {
     backgroundColor: "#467fd3",
