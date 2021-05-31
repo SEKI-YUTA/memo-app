@@ -10,16 +10,17 @@ import MemoDetailScreen from "./MemoDetailScreen";
 import AppBar from "../components/AppBar";
 import App from "../../App";
 import CircleButton from "../components/CircleButton";
+import KeyboardSafeView from "../components/KeyboardSafeView";
 
 export default MemoEditScreen = () => {
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
+    <KeyboardSafeView style={styles.container}>
       <AppBar />
       <View style={styles.inputContainer}>
         <TextInput value="買い物リスト" multiline style={styles.input} />
       </View>
       <CircleButton name="check" />
-    </KeyboardAvoidingView>
+    </KeyboardSafeView>
   );
 };
 
