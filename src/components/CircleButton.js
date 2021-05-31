@@ -1,18 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-export default CircleButton = ({ name, style }) => {
+export default CircleButton = ({ name, style, onPress }) => {
   return (
-    <View style={[styles.circleButton, style]}>
+    <TouchableOpacity style={[styles.circleButton, style]} onPress={onPress}>
       <Feather name={name} size={32} color="white"></Feather>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 CircleButton.defaultProps = {
   style: null,
   name: null,
+  onPress: null,
 };
 const styles = StyleSheet.create({
   circleButton: {
