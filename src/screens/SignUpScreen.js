@@ -7,10 +7,30 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Button from "../components/Button";
+import firebase from "firebase";
 
 export default SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handlePress = () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "MemoList" }],
+        });
+      })
+      .catch((err) => {
+        console.log(err.code, err.message);
+        alert(err.message);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -37,15 +57,7 @@ export default SignUpScreen = ({ navigation }) => {
           textContentType="password"
           secureTextEntry
         />
-        <Button
-          label="Sign UP!"
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "MemoList" }],
-            });
-          }}
-        />
+        <Button label="Sign UP!" onPress={handlePress} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registerd</Text>
           <TouchableOpacity

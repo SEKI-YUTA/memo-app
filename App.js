@@ -11,14 +11,20 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from "@react-navigation/stack";
+import firebase from "firebase";
+import { firebaseConfig } from "./env";
 
 const Stack = createStackNavigator();
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="LogIn"
+        initialRouteName="SignUp"
         screenOptions={{
           headerStyle: { backgroundColor: "#467df3" },
           headerTitleStyle: { color: "#fff" },

@@ -8,9 +8,29 @@ import {
 } from "react-native";
 import AppBar from "../components/AppBar";
 import Button from "../components/Button";
+import firebase from "firebase";
+
 export default LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handlePress = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "MemoList" }],
+        });
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -37,15 +57,7 @@ export default LogInScreen = ({ navigation }) => {
           textContentType="password"
           secureTextEntry
         />
-        <Button
-          label="Submit"
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "MemoList" }],
-            });
-          }}
-        />
+        <Button label="Submit" onPress={handlePress} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not register?</Text>
           <TouchableOpacity
