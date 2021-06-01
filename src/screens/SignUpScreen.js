@@ -8,18 +8,32 @@ import {
 } from "react-native";
 import AppBar from "../components/AppBar";
 import Button from "../components/Button";
-export default SignUpScreen = () => {
+export default SignUpScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <AppBar />
       <View style={styles.inner}>
         <Text style={styles.title}>Sign UP</Text>
         <TextInput style={styles.input} value="email address" />
         <TextInput style={styles.input} value="password" />
-        <Button label="Sign UP!" />
+        <Button
+          label="Sign UP!"
+          onPress={() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "MemoList" }],
+            });
+          }}
+        />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registerd</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "LogIn" }],
+              });
+            }}
+          >
             <Text style={styles.footerLink}>Log in!</Text>
           </TouchableOpacity>
         </View>
