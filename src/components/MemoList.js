@@ -1,3 +1,4 @@
+import { dateToString } from "../utils";
 import React from "react";
 import {
   View,
@@ -18,14 +19,16 @@ export default MemoList = ({ memos }) => {
       <TouchableOpacity
         style={styles.memoListItem}
         onPress={() => {
-          navigation.navigate("MemoDetail");
+          navigation.navigate("MemoDetail", { id: item.id });
         }}
       >
         <View>
           <Text style={styles.memoListItemTitle} numberOfLines={1}>
             {item.bodyText}
           </Text>
-          <Text style={styles.memoListItemDate}>{String(item.updateAt)}</Text>
+          <Text style={styles.memoListItemDate}>
+            {dateToString(item.updateAt)}
+          </Text>
         </View>
         <TouchableOpacity
           style={styles.memoDelete}
