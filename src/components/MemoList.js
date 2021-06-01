@@ -5,14 +5,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   Touchable,
+  FlatList,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-export default MemoList = () => {
+export default MemoList = ({ memos }) => {
   const navigation = useNavigation();
-  return (
-    <View>
+
+  const renderItem = ({ item }) => {
+    return (
       <TouchableOpacity
         style={styles.memoListItem}
         onPress={() => {
@@ -20,8 +22,10 @@ export default MemoList = () => {
         }}
       >
         <View>
-          <Text style={styles.memoListItemTitle}>買い物リスト</Text>
-          <Text style={styles.memoListItemDate}>2021/05/27</Text>
+          <Text style={styles.memoListItemTitle} numberOfLines={1}>
+            {item.bodyText}
+          </Text>
+          <Text style={styles.memoListItemDate}>{String(item.updateAt)}</Text>
         </View>
         <TouchableOpacity
           style={styles.memoDelete}
@@ -32,6 +36,15 @@ export default MemoList = () => {
           <Feather name="x" size={24} color="#b0b0b0" />
         </TouchableOpacity>
       </TouchableOpacity>
+    );
+  };
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={memos}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 };
@@ -57,5 +70,8 @@ const styles = StyleSheet.create({
   },
   memoDelete: {
     padding: 8,
+  },
+  container: {
+    flex: 1,
   },
 });
