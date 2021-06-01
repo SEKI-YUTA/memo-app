@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useAnimatedGestureHandler } from "react-native-reanimated";
 
 export default MemoList = () => {
   const navigation = useNavigation();
