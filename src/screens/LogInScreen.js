@@ -9,10 +9,12 @@ import {
 import AppBar from "../components/AppBar";
 import Button from "../components/Button";
 import firebase from "firebase";
+import Loading from "../components/Loading";
 
 export default LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const unSub = firebase.auth().onAuthStateChanged((user) => {
@@ -21,12 +23,15 @@ export default LogInScreen = ({ navigation }) => {
           index: 0,
           routes: [{ name: "MemoList" }],
         });
+      } else {
+        setLoading(false);
       }
     });
     return unSub;
   }, []);
 
   const handlePress = () => {
+    setLoading(true);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -40,11 +45,15 @@ export default LogInScreen = ({ navigation }) => {
       })
       .catch((err) => {
         alert(err.message);
+      })
+      .then(() => {
+        setLoading(false);
       });
   };
 
   return (
     <View style={styles.container}>
+      <Loading isLoading={isLoading} />
       <View style={styles.inner}>
         <Text style={styles.title}>Log In</Text>
         <TextInput
