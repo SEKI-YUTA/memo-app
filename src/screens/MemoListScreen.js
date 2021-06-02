@@ -37,7 +37,7 @@ export default MemoListScreen = ({ navigation }) => {
           setLoading(false);
         },
         (err) => {
-          console.log(err.message);
+          console.log(err.code);
           setLoading(false);
           alert("データの読み込みに失敗しました。");
         }

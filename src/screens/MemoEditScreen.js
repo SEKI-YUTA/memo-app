@@ -11,6 +11,8 @@ import AppBar from "../components/AppBar";
 import CircleButton from "../components/CircleButton";
 import KeyboardSafeView from "../components/KeyboardSafeView";
 import firebase from "firebase";
+import { translateErrors } from "../utils";
+
 export default MemoEditScreen = ({ navigation, route }) => {
   const { id, bodyText } = route.params;
   const [body, setBody] = useState(bodyText);
@@ -32,7 +34,8 @@ export default MemoEditScreen = ({ navigation, route }) => {
           navigation.goBack();
         })
         .catch((err) => {
-          alert("編集を完了できませんでした");
+          const errorMsg = translateErrors(err.code);
+          Alert.alert(errorMsg.title, errorMsg.description);
         });
     }
   };

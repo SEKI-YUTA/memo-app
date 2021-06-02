@@ -5,11 +5,13 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import AppBar from "../components/AppBar";
 import Button from "../components/Button";
 import firebase from "firebase";
 import Loading from "../components/Loading";
+import { translateErrors } from "../utils";
 
 export default LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -44,7 +46,8 @@ export default LogInScreen = ({ navigation }) => {
         });
       })
       .catch((err) => {
-        alert(err.message);
+        const errorMsg = translateErrors(err.code);
+        Alert.alert(errorMsg.title, errorMsg.description);
       })
       .then(() => {
         setLoading(false);

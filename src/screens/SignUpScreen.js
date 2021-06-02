@@ -5,9 +5,11 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import Button from "../components/Button";
 import firebase from "firebase";
+import { translateErrors } from "../utils/index";
 
 export default SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -26,8 +28,9 @@ export default SignUpScreen = ({ navigation }) => {
         });
       })
       .catch((err) => {
+        const errorMsg = translateErrors(err.code);
         console.log(err.code, err.message);
-        alert(err.message);
+        Alert.alert(errorMsg.title, errorMsg.description);
       });
   };
 
