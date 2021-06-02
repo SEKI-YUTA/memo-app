@@ -1,4 +1,5 @@
 import React from "react";
+import { LogBox } from "react-native";
 import MemoListScreen from "./src/screens/MemoListScreen";
 import MemoDetailScreen from "./src/screens/MemoDetailScreen";
 import MemoEditScreen from "./src/screens/MemoEditScreen";
@@ -20,6 +21,8 @@ if (firebase.apps.length === 0) {
 }
 
 const Stack = createStackNavigator();
+
+LogBox.ignoreLogs(["setting a timer"]);
 
 export default function App() {
   return (
