@@ -10,10 +10,12 @@ import {
 import Button from "../components/Button";
 import firebase from "firebase";
 import { translateErrors } from "../utils/index";
+import { Feather } from "@expo/vector-icons";
 
 export default SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [secureFlg, setSecureFlg] = useState(true);
 
   const handlePress = () => {
     firebase
@@ -49,17 +51,27 @@ export default SignUpScreen = ({ navigation }) => {
           keyboardType="email-address"
           textContentType="emailAddress"
         />
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={(text) => {
-            setPassword(text);
-          }}
-          placeholder="password"
-          autoCapitalize="none"
-          textContentType="password"
-          secureTextEntry
-        />
+        <View style={styles.passwordInputContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+            }}
+            placeholder="password"
+            autoCapitalize="none"
+            textContentType="password"
+            secureTextEntry={secureFlg}
+          />
+          <Feather
+            name={secureFlg ? "eye-off" : "eye"}
+            size={24}
+            color="black"
+            onPress={() => {
+              setSecureFlg(!secureFlg);
+            }}
+          />
+        </View>
         <Button label="Sign UP!" onPress={handlePress} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registerd</Text>
@@ -102,6 +114,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     marginBottom: 16,
+  },
+  passwordInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginBottom: 16,
+    paddingRight: 16,
+  },
+  passwordInput: {
+    flex: 1,
+    fontSize: 16,
+    height: 48,
+    paddingHorizontal: 8,
+    backgroundColor: "#fff",
   },
 
   footerText: {

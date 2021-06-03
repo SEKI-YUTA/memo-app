@@ -12,11 +12,14 @@ import Button from "../components/Button";
 import firebase from "firebase";
 import Loading from "../components/Loading";
 import { translateErrors } from "../utils";
+import { isFuture } from "date-fns";
+import { Feather } from "@expo/vector-icons";
 
 export default LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setLoading] = useState(true);
+  const [secureFlg, setSecureFlg] = useState(true);
 
   useEffect(() => {
     const unSub = firebase.auth().onAuthStateChanged((user) => {
@@ -70,17 +73,34 @@ export default LogInScreen = ({ navigation }) => {
           keyboardType="email-address"
           textContentType="emailAddress"
         />
-        <TextInput
+        <View style={styles.passwordInputContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+            }}
+            placeholder="password"
+            autoCapitalize="none"
+            textContentType="password"
+            secureTextEntry={secureFlg}
+          />
+          <Feather
+            name={secureFlg ? "eye-off" : "eye"}
+            size={24}
+            color="black"
+            onPress={() => {
+              setSecureFlg(!secureFlg);
+            }}
+          />
+        </View>
+
+        {/* <TextInput
+          value="テスト"
           style={styles.input}
-          value={password}
-          onChangeText={(text) => {
-            setPassword(text);
-          }}
-          placeholder="password"
-          autoCapitalize="none"
+          // secureTextEntry={false}
           textContentType="password"
-          secureTextEntry
-        />
+        /> */}
         <Button label="Submit" onPress={handlePress} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not register?</Text>
@@ -123,6 +143,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     marginBottom: 16,
+  },
+  passwordInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginBottom: 16,
+    paddingRight: 16,
+  },
+  passwordInput: {
+    flex: 1,
+    fontSize: 16,
+    height: 48,
+    paddingHorizontal: 8,
+    backgroundColor: "#fff",
   },
 
   footerText: {
